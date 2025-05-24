@@ -14,3 +14,16 @@ app.add_middleware(
 @app.get("/")
 def index():
     return {"message": "Welcome to the API!"}
+
+@app.get("/api/params"):
+def get_params(request: Request):
+    parameters = list()
+
+    for param_key in request.query_params.keys():
+        for param_value in request.query_params.getlist(param_key):
+            parameters.append({
+                "key": param_key,
+                "value": param_value
+            })
+    print(parameters)
+    return parameters
