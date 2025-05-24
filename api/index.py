@@ -27,3 +27,21 @@ def get_params(request: Request):
             })
     print(parameters)
     return parameters
+
+
+from pydantic import BaseModel
+class Job(BaseModel):
+    name: str
+    description: str
+    status: str = "pending"  # Default status is 'pending'
+
+jobs = []
+@app.post("/api/create")
+def create_job(job: Job):
+    jobs.append(job)
+    return {"jobs": jobs}
+
+@app.get("/api/jobs")
+def get_jobs():
+    return {"jobs": jobs}
+
