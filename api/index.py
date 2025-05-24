@@ -15,7 +15,7 @@ app.add_middleware(
 def index():
     return {"message": "Welcome to the API!"}
 
-@app.get("/api/params"):
+@app.get("/api/params")
 def get_params(request: Request):
     parameters = list()
 
