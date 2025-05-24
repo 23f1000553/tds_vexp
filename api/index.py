@@ -45,3 +45,10 @@ def create_job(job: Job):
 def get_jobs():
     return {"jobs": jobs}
 
+@app.delete("/api/jobs/{job_no}")
+def delete_job(job_no: int):
+    if 0 <= job_no < len(jobs):
+        deleted_job = jobs.pop(job_no)
+        return {"message": "Job deleted successfully", "job": deleted_job}
+    else:
+        return {"message": "Job not found"}, 404
