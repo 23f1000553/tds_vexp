@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, jsonify, request
+from fastapi import FastAPI, Request, jsonify
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -61,14 +61,7 @@ with open("q-vercel-python.json", "r") as file:
 marks_dict = {entry["name"]: entry["marks"] for entry in data}
 
 @app.get("/api")
-def get_marks(request: Request):
-    query = request.get("query", {})
-    names = query.get("name", [])
-    if isinstance(names, str):  # If only one name is passed
-        names = [names]
-    result = [marks_dict.get(name, None) for name in names]
+def get_marks(name: list[str] = []):  # <- List of query params like ?name=X&name=Y
+    result = [marks_dict.get(n, None) for n in name]
+    return {"marks": result}
 
-    return jsonify({"marks": result})
-
-if __name__ == "__main__":
-    app.run(debug=True)
