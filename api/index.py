@@ -61,7 +61,7 @@ with open("q-vercel-python.json", "r") as file:
 marks_dict = {entry["name"]: entry["marks"] for entry in data}
 
 @app.get("/api")
-def get_marks():
+def get_marks(request: Request):
     query = request.get("query", {})
     names = query.get("name", [])
     if isinstance(names, str):  # If only one name is passed
