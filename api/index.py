@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, jsonify, request
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -52,3 +52,17 @@ def delete_job(job_no: int):
         return {"message": "Job deleted successfully", "job": deleted_job}
     else:
         return {"message": "Job not found"}, 404
+    
+import json
+
+with open("q-vercel-python.json", "r") as file:
+    data = json.load(file)
+
+marks_dict = {entry["name"]: entry["marks"] for entry in data}
+
+@app.get("/api")
+def get_marks():
+    names = request.args.getlist("name")
+    result = [marks_dict.get(name, None) for name in names]
+
+    return jsonify({"marks": result})
