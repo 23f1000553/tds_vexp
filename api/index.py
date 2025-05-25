@@ -61,7 +61,19 @@ with open("q-vercel-python.json", "r") as file:
 marks_dict = {entry["name"]: entry["marks"] for entry in data}
 
 @app.get("/api")
-def get_marks(name: list[str] = []):  # <- List of query params like ?name=X&name=Y
-    result = [marks_dict.get(n, None) for n in name]
-    return {"marks": result}
+def get_marks(request: Request):
+    parameters = list()
+
+    for param_key in request.query_params.keys():
+        for param_value in request.query_params.getlist(param_key):
+            parameters.append({
+                "key": param_key,
+                "value": param_value
+            })
+    
+    
+    # Filter marks based on parameters
+    filtered_marks = {k: v for k, v in marks_dict.items() if all(param["value"] in v for param in parameters)}
+    
+    return {"marks": filtered_marks}
 
