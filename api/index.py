@@ -66,3 +66,6 @@ def get_marks():
     result = [marks_dict.get(name, None) for name in names]
 
     return jsonify({"marks": result})
+
+if __name__ == "__main__":
+    app.run(debug=True)
