@@ -62,7 +62,10 @@ marks_dict = {entry["name"]: entry["marks"] for entry in data}
 
 @app.get("/api")
 def get_marks():
-    names = request.args.getlist("name")
+    query = request.get("query", {})
+    names = query.get("name", [])
+    if isinstance(names, str):  # If only one name is passed
+        names = [names]
     result = [marks_dict.get(name, None) for name in names]
 
     return jsonify({"marks": result})
