@@ -32,4 +32,5 @@ def get_marks(name: list[str] = []):
     print("Received query:", name)
     result = [marks_dict.get(n, None) for n in name]
     print("Resulting marks:", result)
-    return {"marks": result}
+    return {"marks": result,
+            "query": name}
