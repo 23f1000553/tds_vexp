@@ -30,7 +30,7 @@ async def get_params(request: Request):  # ✅ async & correct injection
             parameters.append(param_value)
 
     
-    return parameters
+    return parameters, marks_dict
 
 
 
