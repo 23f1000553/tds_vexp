@@ -14,7 +14,7 @@ app.add_middleware(
 
 @app.get("/")
 def index():
-    return render_template("index.html")
+    return render_template("../index.html")
 
 with open("q-vercel-python.json", "r") as file:
     data = json.load(file)
