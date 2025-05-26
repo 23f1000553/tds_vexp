@@ -6,10 +6,10 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins, adjust as needed
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods, adjust as needed
-    allow_headers=["*"],  # Allows all headers, adjust as needed
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.get("/")
@@ -21,10 +21,9 @@ with open("q-vercel-python.json", "r") as file:
 
 marks_dict = {entry["name"]: entry["marks"] for entry in data}
 
-
 @app.get("/api")
-def get_params(request: Request):
-    parameters = list()
+async def get_params(request: Request):  # ✅ async & correct injection
+    parameters = []
 
     for param_key in request.query_params.keys():
         for param_value in request.query_params.getlist(param_key):
@@ -32,8 +31,10 @@ def get_params(request: Request):
                 "key": param_key,
                 "value": param_value
             })
+
     print(parameters)
     return parameters
+
 
 
 # from pydantic import BaseModel
