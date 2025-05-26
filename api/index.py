@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, render_template
 from fastapi.middleware.cors import CORSMiddleware
 import json
 
@@ -14,7 +14,7 @@ app.add_middleware(
 
 @app.get("/")
 def index():
-    return {"message": "Welcome to the API!"}
+    return render_template("index.html")
 
 with open("q-vercel-python.json", "r") as file:
     data = json.load(file)
