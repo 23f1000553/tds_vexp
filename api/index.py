@@ -27,12 +27,9 @@ async def get_params(request: Request):  # ✅ async & correct injection
 
     for param_key in request.query_params.keys():
         for param_value in request.query_params.getlist(param_key):
-            parameters.append({
-                "key": param_key,
-                "value": param_value
-            })
+            parameters.append(param_value)
 
-    print(parameters)
+    
     return parameters
 
 
